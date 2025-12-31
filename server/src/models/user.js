@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 // user roles 
 export const UserRole = {
     SUPER_ADMIN: 'SUPER_ADMIN',
-    ADMIN: 'ADMIN',
+    ADMIN: 'ADMIN', //teacher
     STUDENT: 'STUDENT',
     PARENT: 'PARENT'
 }
