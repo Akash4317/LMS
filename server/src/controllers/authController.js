@@ -3,6 +3,8 @@ import user from '../models/user';
 import user, { UserRole } from '../models/user';
 import emailService from '../services/emailService';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt';
+import logger from '../utils/logger';
+import crypto from 'crypto';
 
 // register new user
 export const register = asyncHandler(async (req, res) => {
@@ -390,7 +392,6 @@ export const resetPassword = asyncHandler(async (req, res) => {
 })
 
 // verify email
-
 export const verifyEmail = asyncHandler(async (req, res) => {
     const { token } = req.params;
 
