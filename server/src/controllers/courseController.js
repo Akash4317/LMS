@@ -1,6 +1,6 @@
-import course from '../models/course';
+import Course from '../models/course';
 import progress from '../models/progress';
-import syllabus from '../models/Syllabus';
+import syllabus from '../models/syllabus';
 import { asyncHandler, AppError } from '../middleware/errorHandler';
 import { UserRole } from '../models/user';
 import uploadService from '../services/uploadService';
@@ -41,7 +41,7 @@ export const getAllCourses = asyncHandler(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     const [courses, total] = await Promise.all([
-        course.find(query)
+        Course.find(query)
             .populate('instituteId', 'name logo')
             .populate('teachers', 'name email avatar')
             .populate('createdBy', 'name email')
@@ -49,7 +49,7 @@ export const getAllCourses = asyncHandler(async (req, res) => {
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(Number(limit)),
-        course.countDocuments(query),
+        Course.countDocuments(query),
     ]);
 
     res.json({
@@ -66,7 +66,7 @@ export const getAllCourses = asyncHandler(async (req, res) => {
 
 // Get single course
 export const getCourseById = asyncHandler(async (req, res) => {
-    const course = await course.findById(req.params.id)
+    const course = await Course.findById(req.params.id)
         .populate('instituteId', 'name logo address contactEmail')
         .populate('teachers', 'name email avatar phone')
         .populate('createdBy', 'name email')
@@ -114,7 +114,7 @@ export const getCourseById = asyncHandler(async (req, res) => {
 export const createCourse = asyncHandler(async (req, res) => {
     const { title, description, category, level, duration, price, enrollmentLimit, startDate, endDate, tags, } = req.body;
 
-    const course = await course.create({ title, description, category, level, duration, price, enrollmentLimit, startDate, endDate, tags, instituteId: req.user?.instituteId, createdBy: req.user?._id, teachers: [req.user?._id], });
+    const course = await Course.create({ title, description, category, level, duration, price, enrollmentLimit, startDate, endDate, tags, instituteId: req.user?.instituteId, createdBy: req.user?._id, teachers: [req.user?._id], });
 
     await course.populate('instituteId teachers createdBy');
 
@@ -127,7 +127,7 @@ export const createCourse = asyncHandler(async (req, res) => {
 
 // update course
 export const updateCourse = asyncHandler(async (req, res) => {
-    const course = await course.findById(req.params.id);
+    const course = await Course.findById(req.params.id);
 
     if (!course) {
         throw new AppError('Course not found', 404);
@@ -177,7 +177,7 @@ export const updateCourse = asyncHandler(async (req, res) => {
 
 // delete course
 export const deleteCourse = asyncHandler(async (req, res) => {
-    const course = await course.findById(req.params.id);
+    const course = await Course.findById(req.params.id);
     if (!course) throw new AppError('Course not found', 404);
 
     course.isPublished = false; //soft delete
@@ -195,7 +195,7 @@ export const uploadThumbnail = asyncHandler(async (req, res) => {
         throw new AppError('Please upload an image', 400);
     }
 
-    const course = await course.findById(req.params.id);
+    const course = await Course.findById(req.params.id);
 
     if (!course) {
         throw new AppError('Course not found', 404);
@@ -224,7 +224,7 @@ export const uploadThumbnail = asyncHandler(async (req, res) => {
 
 // Enroll in course
 export const enrollInCourse = asyncHandler(async (req, res) => {
-    const course = await course.findById(req.param.id);
+    const course = await Course.findById(req.param.id);
 
     if (!course) {
         throw new AppError('Course not found', 404);
@@ -288,7 +288,7 @@ export const enrollInCourse = asyncHandler(async (req, res) => {
 // Unenroll from course
 export const unenrollFromCourse = asyncHandler(async (req, res) => {
 
-    const course = await course.findById(req.param.id);
+    const course = await Course.findById(req.param.id);
     if (!course) {
         throw new AppError('course not found', 404);
     }
@@ -314,7 +314,7 @@ export const unenrollFromCourse = asyncHandler(async (req, res) => {
 // Get enrolled students
 export const getEnrolledStudents = asyncHandler(async (req, res) => {
 
-    const course = await course.findById(req.params.id).populate(
+    const course = await Course.findById(req.params.id).populate(
         'students',
         'name email avatar phone createdAt'
     );
@@ -349,7 +349,7 @@ export const getEnrolledStudents = asyncHandler(async (req, res) => {
 export const addTeacherToCourse = asyncHandler(async (req, res) => {
     const { teacherId } = req.body;
 
-    const course = await course.findById(req.param.id);
+    const course = await Course.findById(req.param.id);
 
     if (!course) {
         throw new AppError('course not found', 404)
@@ -376,7 +376,7 @@ export const addTeacherToCourse = asyncHandler(async (req, res) => {
 export const removeTeacherFromCourse = asyncHandler(async (req, res) => {
     const { teacherId } = req.body;
 
-    const course = await course.findById(req.param.id);
+    const course = await Course.findById(req.param.id);
 
     if (!course) {
         throw new AppError('course not found', 404);
@@ -393,7 +393,7 @@ export const removeTeacherFromCourse = asyncHandler(async (req, res) => {
 
 // Get course statistics
 export const getCourseStats = asyncHandler(async (req, res) => {
-    const course = await course.findById(req.param.id);
+    const course = await Course.findById(req.param.id);
 
     if (!course) {
         throw new AppError('course not found', 404);
@@ -432,7 +432,7 @@ export const getCourseStats = asyncHandler(async (req, res) => {
 
 // Get my courses (enrolled courses for students)
 export const getMyCourses = asyncHandler(async (req, res) => {
-    const courses = await course.find({
+    const courses = await Course.find({
         student: req.user.id,
         isPublished: true
     })
@@ -464,7 +464,7 @@ export const getMyCourses = asyncHandler(async (req, res) => {
 
 // Get teaching courses (for teachers)
 export const getTeachingCourses = asyncHandler(async (req, res) => {
-    const courses = await course.find({
+    const courses = await Course.find({
         teacherId: req.param.id,
     }).populate('instituteId', 'name logo')
         .select('title description thumbnail category level students createdAt isPublished')
