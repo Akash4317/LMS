@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import user, { UserRole } from '../models/user';
-import Institute from '../models/Institute';
-import logger from '../utils/logger';
+import user, { UserRole } from '../models/user.js';
+import Institute from '../models/institute.js';
+import logger from '../utils/logger.js';
 
 dotenv.config();
 

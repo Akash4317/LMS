@@ -16,6 +16,7 @@ import * as assignmentController from '../controllers/assignmentController.js';
 import * as liveClassController from '../controllers/liveClassController.js';
 import * as attendanceController from '../controllers/attendanceController.js';
 import * as dashboardController from '../controllers/dashboardController.js';
+import * as instituteController from '../controllers/instituteController.js';
 
 const router = Router();
 

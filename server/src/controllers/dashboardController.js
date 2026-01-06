@@ -16,7 +16,7 @@ export const getSuperAdminDashboard = asyncHandler(async (req, res) => {
         recentUsers,
         usersByRole,
     ] = await Promise.all([
-        require('../models/Institute').default.countDocuments(),
+        require('../models/institute.js').default.countDocuments(),
         user.countDocuments(),
         Course.countDocuments(),
         user.find()

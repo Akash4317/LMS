@@ -6,7 +6,7 @@ const ClassType = {
     BATCH: 'BATCH',
 };
 
-const ClassStatus = {
+export const ClassStatus = {
     SCHEDULED: 'SCHEDULED',
     ONGOING: 'ONGOING',
     COMPLETED: 'COMPLETED',

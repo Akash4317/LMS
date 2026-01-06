@@ -1,8 +1,8 @@
-import Institute from '../models/Institute';
-import user, { UserRole } from '../models/user';
-import Course from '../models/course';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import uploadService from '../services/uploadService';
+import Institute from '../models/institute.js';
+import user, { UserRole } from '../models/user.js';
+import Course from '../models/course.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import uploadService from '../services/uploadService.js';
 
 // Get all institutes
 export const getAllInstitutes = asyncHandler(async (req, res) => {

@@ -1,4 +1,4 @@
-import LiveClass, { ClassType, ClassStatus } from '../models/liveClass.js';
+import LiveClass, { ClassStatus } from '../models/liveClass.js';
 import user from '../models/user.js';
 import { asyncHandler, AppError } from '../middleware/errorHandler.js';
 
