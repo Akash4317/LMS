@@ -1,7 +1,7 @@
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import user, { UserRole } from '../models/user';
-import uploadService from '../services/uploadService';
-import emailService from '../services/emailService';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import user, { UserRole } from '../models/user.js';
+import uploadService from '../services/uploadService.js';
+import emailService from '../services/emailService.js';
 import crypto from 'crypto';
 
 // get all users

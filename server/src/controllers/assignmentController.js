@@ -1,10 +1,10 @@
-import Assignment, { AssignmentStatus } from '../models/assignment';
-import Course from '../models/course';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import uploadService from '../services/uploadService';
-import notificationService from '../services/notificationService';
-import { NotificationType } from '../models/notification';
-import emailService from '../services/emailService';
+import Assignment, { AssignmentStatus } from '../models/assignment.js';
+import Course from '../models/course.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import uploadService from '../services/uploadService.js';
+import notificationService from '../services/notificationService.js';
+import { NotificationType } from '../models/notification.js';
+import emailService from '../services/emailService.js';
 
 // Get all assignments for a course
 export const getCourseAssignments = asyncHandler(async (req, res) => {

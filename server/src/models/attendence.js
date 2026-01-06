@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 // Enum equivalent in JS
-const AttendanceStatus = {
+export const AttendanceStatus = {
     PRESENT: 'PRESENT',
     ABSENT: 'ABSENT',
     LATE: 'LATE',

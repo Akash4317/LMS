@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 // Enum equivalent in JS
-const AssignmentStatus = {
+export const AssignmentStatus = {
     DRAFT: 'DRAFT',
     PUBLISHED: 'PUBLISHED',
     CLOSED: 'CLOSED',

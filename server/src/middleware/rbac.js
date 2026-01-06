@@ -1,4 +1,4 @@
-import { UserRole } from "../models/user";
+import { UserRole } from "../models/user.js";
 
 export const authorize = (...allowedRoles) => {
     return (req, res, next) => {

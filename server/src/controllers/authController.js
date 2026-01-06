@@ -1,9 +1,8 @@
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import user from '../models/user';
-import user, { UserRole } from '../models/user';
-import emailService from '../services/emailService';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt';
-import logger from '../utils/logger';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import user, { UserRole } from '../models/user.js';
+import emailService from '../services/emailService.js';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
+import logger from '../utils/logger.js';
 import crypto from 'crypto';
 
 // register new user

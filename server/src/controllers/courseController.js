@@ -1,11 +1,11 @@
-import Course from '../models/course';
-import progress from '../models/progress';
-import syllabus from '../models/syllabus';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import { UserRole } from '../models/user';
-import uploadService from '../services/uploadService';
-import notificationService from '../services/notificationService';
-import { notificationType } from '../models/notification';
+import Course from '../models/course.js';
+import progress from '../models/progress.js';
+import syllabus from '../models/syllabus.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import { UserRole } from '../models/user.js';
+import uploadService from '../services/uploadService.js';
+import notificationService from '../services/notificationService.js';
+import { NotificationType } from '../models/notification.js';
 
 // get all courses
 export const getAllCourses = asyncHandler(async (req, res) => {
@@ -269,7 +269,7 @@ export const enrollInCourse = asyncHandler(async (req, res) => {
     // Send notification
     await notificationService.createNotification(
         req.user._id,
-        notificationType.COURSE_ENROLLED,
+        NotificationType.COURSE_ENROLLED,
         'Course Enrollment Successful',
         `You have successfully enrolled in ${course.title}`,
         { courseId: course._id },
