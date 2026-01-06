@@ -1,9 +1,7 @@
 import { Server as SocketServer } from 'socket.io';
-import { verifyAccessToken } from '../utils/jwt';
-import user from '../models/user';
-import logger from '../utils/logger';
-import notificationService from '../services/notificationService';
-import user from '../models/user';
+import { verifyAccessToken } from '../utils/jwt.js';
+import logger from '../utils/logger.js';
+import notificationService from '../services/notificationService.js';
 
 export const initializeSocket = (httpServer) => {
     const io = new SocketServer(httpServer, {

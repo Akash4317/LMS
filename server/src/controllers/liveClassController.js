@@ -1,6 +1,6 @@
-import LiveClass, { ClassType, ClassStatus } from '../models/liveClass';
-import user from '../models/user';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
+import LiveClass, { ClassType, ClassStatus } from '../models/liveClass.js';
+import user from '../models/user.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
 
 // Get all live classes for a course
 export const getCourseLiveClasses = asyncHandler(async (req, res) => {

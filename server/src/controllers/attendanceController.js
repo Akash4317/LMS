@@ -1,7 +1,7 @@
-import Attendance, { AttendanceStatus } from '../models/Attendance';
-import Course from '../models/course';
-import LiveClass from '../models/liveClass';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
+import Attendance, { AttendanceStatus } from '../models/attendence.js';
+import Course from '../models/course.js';
+import LiveClass from '../models/liveClass.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
 
 // Mark attendance for a live class
 export const markAttendance = asyncHandler(async (req, res) => {

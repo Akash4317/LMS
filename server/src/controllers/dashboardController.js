@@ -1,11 +1,11 @@
-import user, { UserRole } from '../models/user';
-import Progress from '../models/progress';
-import Attendance from '../models/Attendance';
-import Assignment from '../models/assignment';
-import Course from '../models/course';
-import LiveClass from '../models/liveClass';
-import Notification from '../models/notification';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
+import user, { UserRole } from '../models/user.js';
+import Progress from '../models/progress.js';
+import Attendance from '../models/attendence.js';
+import Assignment from '../models/assignment.js';
+import Course from '../models/course.js';
+import LiveClass from '../models/liveClass.js';
+import Notification from '../models/notification.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
 
 // Get Super Admin Dashboard
 export const getSuperAdminDashboard = asyncHandler(async (req, res) => {

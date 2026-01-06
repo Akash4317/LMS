@@ -1,9 +1,9 @@
-import Lecture from '../models/lecture';
-import Progress from '../models/progress';
-import notificationService from '../services/notificationService';
-import { NotificationType } from '../models/notification';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import uploadService from '../services/uploadService';
+import Lecture from '../models/lecture.js';
+import Progress from '../models/progress.js';
+import notificationService from '../services/notificationService.js';
+import { NotificationType } from '../models/notification.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import uploadService from '../services/uploadService.js';
 
 //  Get all lectures for a course
 export const getCourseLectures = asyncHandler(async (req, res) => {

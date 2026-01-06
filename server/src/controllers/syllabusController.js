@@ -1,6 +1,6 @@
-import Course from '../models/course';
-import { asyncHandler, AppError } from '../middleware/errorHandler';
-import Syllabus from '../models/syllabus';
+import Course from '../models/course.js';
+import { asyncHandler, AppError } from '../middleware/errorHandler.js';
+import Syllabus from '../models/syllabus.js';
 
 // Get all syllabus for a course
 export const getCourseSyllabus = asyncHandler(async (req, res) => {
