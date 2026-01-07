@@ -11,7 +11,6 @@ dotenv.config();
 
 // import config
 import connectDB from './config/database.js';
-import { connectRedis } from './config/redis.js';
 import logger from './utils/logger.js';
 
 // import middleware
@@ -109,7 +108,7 @@ const startServer = async () => {
         await connectDB();
 
         // Connect to Redis
-        await connectRedis();
+        // await connectRedis(); removed as io redis do not required calling connect method
 
         // Initialize Socket.IO
         initializeSocket(httpServer);
