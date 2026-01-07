@@ -100,7 +100,7 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 // initialize server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
     try {
