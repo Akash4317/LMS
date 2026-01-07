@@ -13,9 +13,9 @@ export const apiLimiter = rateLimit({
     legacyHeaders: false,
     ...(process.env.NODE_ENV === 'production' && {
         store: new RedisStore({
-            client: redisClient,
+            sendCommand: (...args) => redisClient.call(...args),
             prefix: 'rl:',
-        }),
+        })
     }),
 })
 
