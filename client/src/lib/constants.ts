@@ -1,5 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:8080';
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+export const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:8080';
 
 export const USER_ROLES = {
     SUPER_ADMIN: 'SUPER_ADMIN',
