@@ -1,7 +1,16 @@
-import axios from 'axios';
-import { API_URL } from '@/lib/constants';
+import axios, { AxiosError } from 'axios';
+import type { AxiosInstance } from 'axios';
+import { API_URL } from "../lib/constants";
+
+interface ApiResponse<T> {
+  data: T;
+  message: string;
+  status: string;
+}
 
 class ApiService {
+  private api: AxiosInstance;
+
   constructor() {
     this.api = axios.create({
       baseURL: API_URL,
@@ -26,20 +35,17 @@ class ApiService {
     // Response interceptor
     this.api.interceptors.response.use(
       (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
+      async (error: AxiosError) => {
+        const originalRequest = error.config as any;
 
         if (error.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
 
           try {
             const refreshToken = localStorage.getItem('refreshToken');
-
-            const response = await axios.post(
-              `${API_URL}/auth/refresh-token`,
-              { refreshToken },
-              { withCredentials: true }
-            );
+            const response = await axios.post(`${API_URL}/auth/refresh-token`, {
+              refreshToken,
+            });
 
             const { accessToken } = response.data.data;
             localStorage.setItem('accessToken', accessToken);
@@ -59,24 +65,24 @@ class ApiService {
     );
   }
 
-  get(url, config) {
-    return this.api.get(url, config);
+  get<T>(url: string, config?: any) {
+    return this.api.get<ApiResponse<T>>(url, config);
   }
 
-  post(url, data, config) {
-    return this.api.post(url, data, config);
+  post<T>(url: string, data?: any, config?: any) {
+    return this.api.post<ApiResponse<T>>(url, data, config);
   }
 
-  put(url, data, config) {
-    return this.api.put(url, data, config);
+  put<T>(url: string, data?: any, config?: any) {
+    return this.api.put<ApiResponse<T>>(url, data, config);
   }
 
-  delete(url, config) {
-    return this.api.delete(url, config);
+  delete<T>(url: string, config?: any) {
+    return this.api.delete<ApiResponse<T>>(url, config);
   }
 
-  patch(url, data, config) {
-    return this.api.patch(url, data, config);
+  patch<T>(url: string, data?: any, config?: any) {
+    return this.api.patch<ApiResponse<T>>(url, data, config);
   }
 }
 
