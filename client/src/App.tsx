@@ -1,13 +1,21 @@
 import './App.css'
 
+// Layout
+import { useSocket } from './hooks/useSocket';
+import { BrowserRouter, Routes } from 'react-router-dom';
+import { useAuthStore } from './store/authStore';
+
 function App() {
-
-
+  const { isAuthenticated } = useAuthStore();
+  useSocket();
   return (
     <>
-      <p className="text-5xl font-semibold  text-center">
-        Hello world!
-      </p>
+      <BrowserRouter>
+        <Routes>
+
+        </Routes>
+
+      </BrowserRouter>
     </>
   )
 }
