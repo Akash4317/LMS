@@ -2,12 +2,12 @@ import api from "./api"
 
 export const courseService = {
 
-    getAllCourse: async (params) => {
+    getAllCourses: async (params:any) => {
         const response = await api.get('/courses', { params });
         return response.data;
     },
 
-    getCourseById: async (courseId) => {
+    getCourseById: async (courseId:any) => {
         const response = await api.get(`/courses/${courseId}`);
         return response.data.data;
     },
@@ -17,30 +17,30 @@ export const courseService = {
         return response.data.data;
     },
 
-    createCourse: async (data) => {
+    createCourse: async (data:any) => {
         const response = await api.post('/courses', data);
         return response.data.data;
     },
 
-    updateCourse: async (id, data) => {
+    updateCourse: async (id:any, data:any) => {
         const response = await api.put(`/courses/${id}`, data);
         return response.data.data;
     },
 
-    deleteCourse: async (id) => {
+    deleteCourse: async (id:any) => {
         await api.delete(`/courses/${id}`);
     },
 
-    enrollInCourse: async (id) => {
+    enrollInCourse: async (id:any) => {
         const response = await api.post(`/courses/${id}/enroll`);
         return response.data.data;
     },
 
-    unenrollFromCourse: async (id) => {
+    unenrollFromCourse: async (id:any) => {
         await api.delete(`/courses/${id}/enroll`);
     },
 
-    uploadThumbnail: async (id, file) => {
+    uploadThumbnail: async (id:any, file:any) => {
         const formData = new FormData();
         formData.append('thumbnail', file);
 
