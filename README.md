@@ -2,7 +2,7 @@
 
 A **full-stack, role-based Learning Management System (LMS)** built using the **MERN stack**, designed to simulate a **real-world education platform** used by institutes, teachers, students, and parents.
 
-This project focuses on **scalable architecture, clean RBAC implementation, and production-grade backend design**, making it suitable as a **portfolio project for software engineers**.
+This project focuses on **scalable architecture, clean RBAC implementation, and production-grade backend design**.
 
 ---
 
