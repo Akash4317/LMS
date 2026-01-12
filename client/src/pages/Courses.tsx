@@ -26,7 +26,7 @@ export const Courses: React.FC = () => {
         );
     }
 
-    const courses = data?.data || [];
+    const courses = (data?.data as any[]) || [];
 
     return (
         <div className="space-y-6">

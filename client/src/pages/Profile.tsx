@@ -10,6 +10,7 @@ import { formatDate } from "../lib/utility";
 import { Calendar, Camera, Mail, Phone } from "lucide-react";
 import { Input } from "../components/common/Input";
 import { Avatar } from "../components/common/Avatar";
+import type { User } from "../types";
 
 export const Profile: React.FC = () => {
     const { user, setUser } = useAuthStore();
@@ -19,7 +20,7 @@ export const Profile: React.FC = () => {
         phone: user?.phone || '',
     });
 
-    const updateMutation = useMutation({
+    const updateMutation = useMutation<User, Error, Partial<User>>({
         mutationFn: authService.updateProfile,
         onSuccess: (data) => {
             setUser(data);
