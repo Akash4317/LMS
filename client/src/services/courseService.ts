@@ -1,3 +1,4 @@
+import type { Course } from "../types";
 import api from "./api"
 
 export const courseService = {
@@ -7,10 +8,10 @@ export const courseService = {
         return response.data;
     },
 
-    getCourseById: async (courseId:any) => {
+    getCourseById: async (courseId: string): Promise<Course> => {
         const response = await api.get(`/courses/${courseId}`);
-        return response.data.data;
-    },
+        return response.data.data as Course;
+      },
 
     getMyCourses: async () => {
         const response = await api.get('/courses/my-courses');

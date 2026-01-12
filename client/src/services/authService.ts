@@ -1,3 +1,4 @@
+import type { User } from "../types";
 import api from "./api";
 
 export const authService = {
@@ -27,7 +28,7 @@ export const authService = {
 
     updateProfile: async (data:any) => {
         const response = await api.put('/auth/profile', data);
-        return response.data.data;
+        return response.data.data as User;
     },
 
     changePassword: async (currentPassword:string, newPassword:string) => {
