@@ -10,17 +10,17 @@ import { Home } from './pages/Home';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { Layout } from './components/layout/Layout';
 import { Dashboard } from './pages/Dashboard';
-// import { Login } from './pages/Login';
-// import { Register } from './pages/Register';
-// import { Courses } from './pages/Courses';
-// import { CourseDetail } from './pages/CourseDetail';
-// import { MyCourses } from './pages/MyCourses';
-// import { Assignments } from './pages/Assignments';
-// import { LiveClasses } from './pages/LiveClasses';
-// import { Attendance } from './pages/Attendance';
-// import { Profile } from './pages/Profile';
-// import { Users } from './pages/Users';
-// import { NotFound } from './pages/NotFound';
+import { Courses } from './pages/Courses';
+import { CourseDetail } from './pages/CourseDetail';
+import { Assignments } from './pages/Assignments';
+import { NotFound } from './pages/NotFound';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { MyCourses } from './pages/MyCourses';
+import { LiveClasses } from './pages/LiveClasses';
+import { Profile } from './pages/Profile';
+import { Attendance } from './pages/Attendance';
+import { Users } from './pages/Users';
 
 function App() {
 

@@ -11,11 +11,11 @@ export const courseService = {
     getCourseById: async (courseId: string): Promise<Course> => {
         const response = await api.get(`/courses/${courseId}`);
         return response.data.data as Course;
-      },
+    },
 
-    getMyCourses: async () => {
+    getMyCourses: async (): Promise<Course[]> => {
         const response = await api.get('/courses/my-courses');
-        return response.data.data;
+        return response.data.data as Course[];
     },
 
     createCourse: async (data:any) => {
