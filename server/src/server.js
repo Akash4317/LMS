@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import { createServer } from 'http';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 
 // load env
 dotenv.config();
@@ -86,6 +88,9 @@ app.get('/health', (req, res) => {
 
 // api routes
 app.use('/api', routes);
+
+// Swagger setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 404 handler
 app.use((req, res) => {
