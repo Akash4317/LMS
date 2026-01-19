@@ -38,7 +38,7 @@ router.post('/auth/login',
 )
 router.post('/auth/refresh-token', authController.refreshToken);
 router.post('/auth/logout', authenticate, authController.logout);
-router.post('/auth/me', authenticate, authController.getMe);
+router.get('/auth/me',authenticate, authController.getMe);
 router.put('/auth/profile', authenticate, authController.updateProfile);
 router.put('/auth/change-password', authenticate, authController.changePassword);
 router.post('/auth/forgot-password', authController.forgotPassword);

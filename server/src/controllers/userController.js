@@ -1,5 +1,5 @@
 import { asyncHandler, AppError } from '../middleware/errorHandler.js';
-import user, { UserRole } from '../models/user.js';
+import User, { UserRole } from '../models/user.js';
 import uploadService from '../services/uploadService.js';
 import emailService from '../services/emailService.js';
 import crypto from 'crypto';

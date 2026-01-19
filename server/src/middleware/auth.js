@@ -1,10 +1,11 @@
-import user from '../models/user.js';
+import User from '../models/user.js';
 import { verifyAccessToken } from '../utils/jwt.js';
 import logger from '../utils/logger.js';
 
 export const authenticate = async (req, res, next) => {
     try {
-        const authHeader = req.header.authorization;
+       
+        const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({
@@ -17,7 +18,7 @@ export const authenticate = async (req, res, next) => {
 
         const decoded = verifyAccessToken(token);
 
-        const user = await user.findById(decoded.userId).select('-password');
+        const user = await User.findById(decoded.userId).select('-password');
 
         if (!user) {
             return res.status(401).json({
