@@ -2,7 +2,7 @@ import { UserRole } from "../models/user.js";
 
 export const authorize = (...allowedRoles) => {
     return (req, res, next) => {
-        if (!res.user) {
+        if (!req.user) {
             return res.status(401).json({
                 success: false,
                 message: 'Authentication Required'

@@ -83,18 +83,14 @@ export const Home: React.FC = () => {
         <div className="min-h-screen bg-white">
             {/* Navigation */}
             <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4! sm:px-6! lg:px-8!">
                     <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center space-x-2">
-                            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                                <span className="text-xl font-bold text-white">L</span>
-                            </div>
+                        <div className="flex items-center">
                             <span className="text-2xl font-bold text-gray-900">LMS Platform</span>
                         </div>
 
-                        <div className="hidden md:flex space-x-8">
+                        <div className="hidden md:flex space-x-8!">
                             <a href="#features" className="text-gray-700 hover:text-primary-600 transition-colors">Features</a>
-                            <a href="#about" className="text-gray-700 hover:text-primary-600 transition-colors">About</a>
                             <a href="#testimonials" className="text-gray-700 hover:text-primary-600 transition-colors">Testimonials</a>
                             <a href="#contact" className="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
                         </div>
@@ -147,7 +143,7 @@ export const Home: React.FC = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
-                                    <span>14-day free trial</span>
+                                    <span>free trial</span>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 import { asyncHandler, AppError } from '../middleware/errorHandler.js';
-import user, { UserRole } from '../models/user.js';
+import User, { UserRole } from '../models/user.js';
 import emailService from '../services/emailService.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt.js';
 import logger from '../utils/logger.js';
@@ -10,7 +10,7 @@ export const register = asyncHandler(async (req, res) => {
     const { name, email, password, role = UserRole.STUDENT, phone, instituteId } = req.body;
 
     // check existing user
-    const existingUser = await user.findById({ email });
+    const existingUser = await User.findById({ email });
     if (existingUser) {
         throw new AppError('uesr with this email already exists', 400)
     }
@@ -21,7 +21,7 @@ export const register = asyncHandler(async (req, res) => {
     }
 
     // create user
-    const user = await user.create({ name, email, password, role, phone, instituteId: instituteId || req.user?.instituteId, })
+    const user = await User.create({ name, email, password, role, phone, instituteId: instituteId || req.user?.instituteId, })
 
     // Generate token 
     const accessToken = generateAccessToken(user);
@@ -59,7 +59,7 @@ export const login = asyncHandler(async (req, res) => {
         throw new AppError('Please provide email and password', 400);
     }
 
-    const user = await user.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
         throw new AppError('Invalid email or password', 401);
@@ -81,7 +81,7 @@ export const login = asyncHandler(async (req, res) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    // save uesr last login info
+    // save user last login info
     user.refreshToken = refreshToken;
     user.lastLogin = new Date();
     await user.save();
@@ -91,10 +91,12 @@ export const login = asyncHandler(async (req, res) => {
     delete userResponse.password;
     delete userResponse.refreshToken;
 
+    const isProd = process.env.NODE_ENV === 'production';
+
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: isProd,// ✅ HTTPS only in prod
+        sameSite: isProd ? 'none' : 'lax', // ✅ cross-origin support
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -114,7 +116,7 @@ export const login = asyncHandler(async (req, res) => {
 // refresh token
 export const refreshToken = asyncHandler(async (req, res) => {
     const tokenFromBody = req.body.refreshToken;
-    const cookieToken = req.cookies?.refreshToken
+    const cookieToken = req.cookies?.refreshToken;    
 
     const refreshTokenToUse = tokenFromBody || cookieToken;
 
@@ -126,7 +128,7 @@ export const refreshToken = asyncHandler(async (req, res) => {
     const decoded = verifyRefreshToken(refreshTokenToUse);
 
     // find user
-    const user = await user.findById(decoded.userId);
+    const user = await User.findById(decoded.userId);
 
     if (!user || user.refreshToken !== refreshTokenToUse) {
         throw new AppError('Invalid refresh token', 401);
@@ -144,11 +146,13 @@ export const refreshToken = asyncHandler(async (req, res) => {
     user.refreshToken = newRefreshToken;
     await user.save();
 
+    const isProd = process.env.NODE_ENV === 'production';
+
     // Update cookie
     res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: isProd,// ✅ HTTPS only in prod
+        sameSite: isProd ? 'none' : 'lax', // ✅ cross-origin support
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -183,8 +187,8 @@ export const logout = asyncHandler(async (req, res) => {
 // get current user
 export const getMe = asyncHandler(async (req, res) => {
 
-    const user = await user.findById(req.user?._id)
-        .select('-password -refreshToken')
+    const user = await User.findById(req.user?._id)
+        .select('-password')
         .populate('instituteId', 'name logo');
 
     if (!user) {
@@ -202,7 +206,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
     const { name, phone, avatar } = req.body;
 
-    const user = await user.findById(req.user?._id);
+    const user = await User.findById(req.user?._id);
 
     if (!user) {
         throw new AppError('User not found', 404);
@@ -242,7 +246,7 @@ export const changePassword = asyncHandler(async (req, res) => {
         throw new AppError('New password must be at least 8 characters long', 400);
     }
 
-    const user = await user.findById(req.user?._id).select('+password');
+    const user = await User.findById(req.user?._id).select('+password');
 
     if (!user) {
         throw new AppError('User not found', 404);
@@ -250,7 +254,7 @@ export const changePassword = asyncHandler(async (req, res) => {
 
     // validate password
 
-    const isValid = await user.comparePassword(currentPassword);
+    const isValid = await User.comparePassword(currentPassword);
 
     if (!isValid) {
         throw new AppError('Current password is incorrect', 401);

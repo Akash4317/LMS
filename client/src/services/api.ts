@@ -42,27 +42,24 @@ class ApiService {
           originalRequest._retry = true;
 
           try {
-            const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.post(`${API_URL}/auth/refresh-token`, {
-              refreshToken,
-            });
+            const response = await this.api.post('/auth/refresh-token');
 
             const { accessToken } = response.data.data;
             localStorage.setItem('accessToken', accessToken);
 
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
             return this.api(originalRequest);
-          } catch (refreshError) {
+          } catch {
             localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
             window.location.href = '/login';
-            return Promise.reject(refreshError);
+            return Promise.reject(error);
           }
         }
 
         return Promise.reject(error);
       }
     );
+
   }
 
   get<T>(url: string, config?: any) {

@@ -38,7 +38,7 @@ router.post('/auth/login',
 )
 router.post('/auth/refresh-token', authController.refreshToken);
 router.post('/auth/logout', authenticate, authController.logout);
-router.post('/auth/me', authenticate, authController.getMe);
+router.get('/auth/me',authenticate, authController.getMe);
 router.put('/auth/profile', authenticate, authController.updateProfile);
 router.put('/auth/change-password', authenticate, authController.changePassword);
 router.post('/auth/forgot-password', authController.forgotPassword);
@@ -46,7 +46,7 @@ router.post('/auth/reset-password/:token', authController.resetPassword);
 router.get('/auth/verify-email/:token', authController.verifyEmail);
 
 // user routes
-router.get('/users', authenticate, authorize([UserRole.SUPER_ADMIN, UserRole.ADMIN]), userController.getAllUsers);
+router.get('/users', authenticate, authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN), userController.getAllUsers);
 router.get('/users/stats', authenticate, authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN), userController.getUserStats);
 router.get('/users/:id', authenticate, userController.getUserById);
 router.post(

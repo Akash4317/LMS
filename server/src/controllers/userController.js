@@ -1,5 +1,5 @@
 import { asyncHandler, AppError } from '../middleware/errorHandler.js';
-import user, { UserRole } from '../models/user.js';
+import User, { UserRole } from '../models/user.js';
 import uploadService from '../services/uploadService.js';
 import emailService from '../services/emailService.js';
 import crypto from 'crypto';
@@ -38,14 +38,14 @@ export const getAllUsers = asyncHandler(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     const [users, total] = await Promise.all([
-        user.find(query)
+        User.find(query)
             .select('-password -refreshToken')
             .populate('instituteId', 'name logo')
             .populate('linkedStudents', 'name email avatar')
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(Number(limit)),
-        user.countDocuments(query),
+        User.countDocuments(query),
     ]);
 
     res.json({
@@ -62,7 +62,7 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
 // get single user
 export const getUserById = asyncHandler(async (req, res) => {
-    const user = await user.findById(req.params.id)
+    const user = await User.findById(req.params.id)
         .select('-password -refreshToken')
         .populate('instituteId', 'name logo address contactEmail')
         .populate('linkedStudents', 'name email avatar');
@@ -136,7 +136,7 @@ export const updateUser = asyncHandler(async (req, res) => {
 
     const { name, phone, avatar, role, isActive, linkedStudents } = req.body;
 
-    const user = await user.findById(req.params.id);
+    const user = await User.findById(req.params.id);
 
     if (!user) {
         throw new AppError('User not found', 404);
@@ -180,7 +180,7 @@ export const updateUser = asyncHandler(async (req, res) => {
 
 // Delete user
 export const deleteUser = asyncHandler(async (req, res) => {
-    const user = await user.findById(req.params.id);
+    const user = await User.findById(req.params.id);
 
     if (!user) {
         throw new AppError('User not found', 404);
@@ -209,7 +209,7 @@ export const uploadAvatar = asyncHandler(async (req, res) => {
     const result = await uploadService.uploadImage(req.file, 'lms/avatars');
 
     // update user avatar
-    const user = await user.findById(req.user?._id);
+    const user = await User.findById(req.user?._id);
     if (user) {
         // Delete old avatar if exists
         if (user.avatar) {
@@ -238,13 +238,13 @@ export const linkStudentToParent = asyncHandler(async (req, res) => {
     }
 
     // Get student
-    const student = await user.findById(studentId);
+    const student = await User.findById(studentId);
     if (!student || student.role !== UserRole.STUDENT) {
         throw new AppError('Invalid student', 400);
     }
 
     // Get parent
-    const parent = await user.findById(req.user?._id);
+    const parent = await User.findById(req.user?._id);
     if (!parent || parent.role !== UserRole.PARENT) {
         throw new AppError('Only parents can link students', 403);
     }
@@ -270,7 +270,7 @@ export const linkStudentToParent = asyncHandler(async (req, res) => {
 export const unlinkStudentFromParent = asyncHandler(async (req, res) => {
     const { studentId } = req.params;
 
-    const parent = await user.findById(req.user?._id);
+    const parent = await User.findById(req.user?._id);
     if (!parent || parent.role !== UserRole.PARENT) {
         throw new AppError('Only parents can unlink students', 403);
     }
@@ -297,12 +297,12 @@ export const getUserStats = asyncHandler(async (req, res) => {
     }
 
     const [totalUsers, activeUsers, studentCount, teacherCount, parentCount, recentUsers] = await Promise.all([
-        user.countDocuments(query),
-        user.countDocuments({ ...query, isActive: true }),
-        user.countDocuments({ ...query, role: UserRole.STUDENT }),
-        user.countDocuments({ ...query, role: UserRole.ADMIN }),
-        user.countDocuments({ ...query, role: UserRole.PARENT }),
-        user.find(query)
+        User.countDocuments(query),
+        User.countDocuments({ ...query, isActive: true }),
+        User.countDocuments({ ...query, role: UserRole.STUDENT }),
+        User.countDocuments({ ...query, role: UserRole.ADMIN }),
+        User.countDocuments({ ...query, role: UserRole.PARENT }),
+        User.find(query)
             .select('name email role createdAt avatar')
             .sort({ createdAt: -1 })
             .limit(5),
