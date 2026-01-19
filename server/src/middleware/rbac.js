@@ -2,8 +2,6 @@ import { UserRole } from "../models/user.js";
 
 export const authorize = (...allowedRoles) => {
     return (req, res, next) => {
-        console.log('Authorize user:', req.user);
-        console.log('Authorizing roles:', allowedRoles, 'for user role:', req.user?.role);
         if (!req.user) {
             return res.status(401).json({
                 success: false,

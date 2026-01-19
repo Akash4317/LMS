@@ -46,7 +46,7 @@ router.post('/auth/reset-password/:token', authController.resetPassword);
 router.get('/auth/verify-email/:token', authController.verifyEmail);
 
 // user routes
-router.get('/users', authenticate, authorize([UserRole.SUPER_ADMIN, UserRole.ADMIN]), userController.getAllUsers);
+router.get('/users', authenticate, authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN), userController.getAllUsers);
 router.get('/users/stats', authenticate, authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN), userController.getUserStats);
 router.get('/users/:id', authenticate, userController.getUserById);
 router.post(

@@ -191,10 +191,6 @@ export const getMe = asyncHandler(async (req, res) => {
         .select('-password')
         .populate('instituteId', 'name logo');
 
-    console.log('Current User:', user);
-    console.log('Request User:', req.user);
-    console.log('Request User ID:', req.user?._id);
-
     if (!user) {
         throw new AppError('User not found', 404);
     }
