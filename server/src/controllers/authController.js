@@ -10,7 +10,7 @@ export const register = asyncHandler(async (req, res) => {
     const { name, email, password, role = UserRole.STUDENT, phone, instituteId } = req.body;
 
     // check existing user
-    const existingUser = await User.findById({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
         throw new AppError('uesr with this email already exists', 400)
     }
@@ -254,7 +254,7 @@ export const changePassword = asyncHandler(async (req, res) => {
 
     // validate password
 
-    const isValid = await User.comparePassword(currentPassword);
+    const isValid = await user.comparePassword(currentPassword);
 
     if (!isValid) {
         throw new AppError('Current password is incorrect', 401);
@@ -281,7 +281,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
         throw new AppError('Please provide email', 400);
     }
 
-    const user = user.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
         // Don't reveal if user exists

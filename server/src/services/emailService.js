@@ -4,41 +4,43 @@ import logger from '../utils/logger.js';
 
 
 class EmailService {
-    constructor() {
-        this.transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: parseInt(process.env.EMAIL_PORT || '587'),
-            secure: false,
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT || '587'),
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+  }
+
+
+
+  async sendEmail(options) {
+    try {
+      const mailOptions = {
+        from: `"LMS Platform" <${process.env.EMAIL_USER}>`,
+        to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
+        subject: options.subject,
+        html: options.html,
+        text: options.text,
+        attachments: options.attachments,
+      };
+
+      const info = await this.transporter.sendMail(mailOptions);
+      logger.info(`Email sent: ${info.messageId}`);
+      return true;
+    } catch (error) {
+      logger.error('Email sending failed:', error);
+      return false;
     }
+  }
 
-    async sendEmail(options) {
-        try {
-            const mailOptions = {
-                from: `"LMS Platform" <${process.env.EMAIL_USER}>`,
-                to: Array.isArray(options.to) ? options.to.join(', ') : options.to,
-                subject: options.subject,
-                html: options.html,
-                text: options.text,
-                attachments: options.attachments,
-            };
-
-            const info = await this.transporter.sendMail(mailOptions);
-            logger.info(`Email sent: ${info.messageId}`);
-            return true;
-        } catch (error) {
-            logger.error('Email sending failed:', error);
-            return false;
-        }
-    }
-
-    // Welcome email
-    async sendWelcomeEmail(to, name, tempPassword) {
-        const html = `
+  // Welcome email
+  async sendWelcomeEmail(to, name, tempPassword) {
+    const html = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -84,22 +86,22 @@ class EmailService {
       </html>
     `;
 
-        return this.sendEmail({
-            to,
-            subject: 'Welcome to LMS Platform',
-            html,
-        });
-    }
+    return this.sendEmail({
+      to,
+      subject: 'Welcome to LMS Platform',
+      html,
+    });
+  }
 
-    // Assignment notification
-    async sendAssignmentNotification(
-        to,
-        studentName,
-        courseName,
-        assignmentTitle,
-        dueDate
-    ) {
-        const html = `
+  // Assignment notification
+  async sendAssignmentNotification(
+    to,
+    studentName,
+    courseName,
+    assignmentTitle,
+    dueDate
+  ) {
+    const html = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -138,22 +140,22 @@ class EmailService {
       </html>
     `;
 
-        return this.sendEmail({
-            to,
-            subject: `New Assignment: ${assignmentTitle}`,
-            html,
-        });
-    }
+    return this.sendEmail({
+      to,
+      subject: `New Assignment: ${assignmentTitle}`,
+      html,
+    });
+  }
 
-    // Live class reminder
-    async sendLiveClassReminder(
-        to,
-        userName,
-        classTitle,
-        scheduledAt,
-        meetingLink
-    ) {
-        const html = `
+  // Live class reminder
+  async sendLiveClassReminder(
+    to,
+    userName,
+    classTitle,
+    scheduledAt,
+    meetingLink
+  ) {
+    const html = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -192,26 +194,26 @@ class EmailService {
       </html>
     `;
 
-        return this.sendEmail({
-            to,
-            subject: `Reminder: ${classTitle} starts soon`,
-            html,
-        });
-    }
+    return this.sendEmail({
+      to,
+      subject: `Reminder: ${classTitle} starts soon`,
+      html,
+    });
+  }
 
-    // Grade notification
-    async sendGradeNotification(
-        to,
-        studentName,
-        assignmentTitle,
-        marks,
-        maxMarks,
-        feedback
-    ) {
-        const percentage = (marks / maxMarks) * 100;
-        const grade = percentage >= 90 ? 'A+' : percentage >= 80 ? 'A' : percentage >= 70 ? 'B' : percentage >= 60 ? 'C' : 'D';
+  // Grade notification
+  async sendGradeNotification(
+    to,
+    studentName,
+    assignmentTitle,
+    marks,
+    maxMarks,
+    feedback
+  ) {
+    const percentage = (marks / maxMarks) * 100;
+    const grade = percentage >= 90 ? 'A+' : percentage >= 80 ? 'A' : percentage >= 70 ? 'B' : percentage >= 60 ? 'C' : 'D';
 
-        const html = `
+    const html = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -260,12 +262,12 @@ class EmailService {
       </html>
     `;
 
-        return this.sendEmail({
-            to,
-            subject: `Assignment Graded: ${assignmentTitle}`,
-            html,
-        });
-    }
+    return this.sendEmail({
+      to,
+      subject: `Assignment Graded: ${assignmentTitle}`,
+      html,
+    });
+  }
 }
 
 export default new EmailService();
