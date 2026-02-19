@@ -21,6 +21,8 @@ import { LiveClasses } from './pages/LiveClasses';
 import { Profile } from './pages/Profile';
 import { Attendance } from './pages/Attendance';
 import { Users } from './pages/Users';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
 
           {/* public route */}
           <Route path='/' element={<Home />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password/:token' element={<ResetPassword />} />
           <Route path='/login' element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
           <Route path='/register' element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
 
