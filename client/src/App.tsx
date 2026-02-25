@@ -23,6 +23,7 @@ import { Attendance } from './pages/Attendance';
 import { Users } from './pages/Users';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
+import { Notifications } from './pages/Notifications';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
           {/* Protected Routes */}
           <Route path='/dashboard' element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
           <Route path='/courses' element={<ProtectedRoute><Layout><Courses /></Layout></ProtectedRoute>} />
+          <Route path='/notifications' element={<ProtectedRoute><Layout><Notifications /></Layout></ProtectedRoute>} />
           <Route path='/courses/:id' element={<ProtectedRoute><Layout><CourseDetail /></Layout></ProtectedRoute>} />
           <Route path="/my-courses" element={<ProtectedRoute allowedRoles={['STUDENT']}><Layout><MyCourses /></Layout></ProtectedRoute>} />
           <Route path='assignments' element={<ProtectedRoute><Layout><Assignments /></Layout></ProtectedRoute>} />

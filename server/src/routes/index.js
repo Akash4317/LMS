@@ -229,4 +229,13 @@ router.put('/notifications/read-all', authenticate, async (req, res) => {
     res.json({ success: true, message: 'All notifications marked as read' });
 });
 
+router.delete(
+    '/notifications/:id',
+    authenticate,
+    async (req, res) => {
+        await Notification.findByIdAndDelete(req.params.id);
+        res.json({ success: true, message: 'Notification deleted' });
+    }
+);
+
 export default router;

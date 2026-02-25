@@ -1,14 +1,13 @@
-import { Bell, LogOut, Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useAuthStore } from "../../store/authStore";
-import { useNotificationStore } from "../../store/notificationStore";
 import { useUIStore } from "../../store/uiStore";
 import { Link } from "react-router-dom";
 import { Avatar } from "../common/Avatar";
+import { NotificationBell } from "./NotificationBell";
 
 export const Navbar: React.FC = () => {
     const { user } = useAuthStore();
-    const { unreadCount } = useNotificationStore();
     const { toggleSidebar } = useUIStore();
     const { logout } = useAuth();
 
@@ -35,17 +34,7 @@ export const Navbar: React.FC = () => {
                     {/* Right */}
                     <div className="flex items-center space-x-4">
                         {/* Notifications */}
-                        <Link
-                            to="/notifications"
-                            className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                        >
-                            <Bell className="w-6 h-6" />
-                            {unreadCount > 0 && (
-                                <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                                    {unreadCount}
-                                </span>
-                            )}
-                        </Link>
+                       <NotificationBell />
 
                         {/* User Menu */}
                         <div className="flex items-center space-x-3">

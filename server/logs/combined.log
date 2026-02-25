@@ -42,3 +42,9 @@
 {"level":"info","message":"🚀 Server running on port 8080","timestamp":"2026-02-19T10:21:35.843Z"}
 {"level":"info","message":"📝 Environment: development","timestamp":"2026-02-19T10:21:35.843Z"}
 {"level":"info","message":"🌐 Frontend URL: http://localhost:5173","timestamp":"2026-02-19T10:21:35.843Z"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2026-02-25T13:17:26.351Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2026-02-25T13:17:26.365Z"}
+{"level":"info","message":"Socket.IO initialized successfully","timestamp":"2026-02-25T13:17:26.367Z"}
+{"level":"info","message":"🚀 Server running on port 8080","timestamp":"2026-02-25T13:17:26.369Z"}
+{"level":"info","message":"📝 Environment: development","timestamp":"2026-02-25T13:17:26.370Z"}
+{"level":"info","message":"🌐 Frontend URL: http://localhost:5173","timestamp":"2026-02-25T13:17:26.371Z"}
